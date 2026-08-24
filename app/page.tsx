@@ -28,15 +28,6 @@ export default function Page() {
       </header>
       <main className="p-6 col-6">
         {/* Page content goes here */}
-        <Button>Hello</Button>
-        <Button>Hello</Button>
-        <Button>Hello</Button>
-        <Button>Hello</Button>
-        <Button>Hello</Button>
-        <Button>Hello</Button>
-        <Button>Hello</Button>
-        <Button>Hello</Button>
-        <Button>Hello</Button>
       </main>
     </div>
   )
