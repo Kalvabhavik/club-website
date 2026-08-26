@@ -8,39 +8,44 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { formatEventDate, type ClubEvent } from "@/lib/events"
 
-const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+const weekdays = ["S", "M", "T", "W", "T", "F", "S"]
 
-function monthKey(year: number, month: number): string {
+function monthKey(year: number, month: number) {
   return `${year}-${String(month + 1).padStart(2, "0")}`
 }
 
-function dayKey(year: number, month: number, day: number): string {
+function dayKey(year: number, month: number, day: number) {
   return `${monthKey(year, month)}-${String(day).padStart(2, "0")}`
 }
 
-/** In-site month calendar; days with events are highlighted and clickable. */
 export function EventCalendar({ events }: { events: ClubEvent[] }) {
   const initial = events[0]?.date ?? new Date().toISOString().slice(0, 10)
+
   const [cursor, setCursor] = React.useState(() => {
     const [year, month] = initial.split("-").map(Number)
     return { year, month: month - 1 }
   })
+
   const [selected, setSelected] = React.useState<string | null>(null)
 
   const byDate = React.useMemo(() => {
     const map = new Map<string, ClubEvent[]>()
+
     for (const event of events) {
       map.set(event.date, [...(map.get(event.date) ?? []), event])
     }
+
     return map
   }, [events])
 
   const firstWeekday = new Date(
     Date.UTC(cursor.year, cursor.month, 1)
   ).getUTCDay()
+
   const daysInMonth = new Date(
     Date.UTC(cursor.year, cursor.month + 1, 0)
   ).getUTCDate()
+
   const monthLabel = new Date(
     Date.UTC(cursor.year, cursor.month, 1)
   ).toLocaleDateString("en-US", {
@@ -51,59 +56,84 @@ export function EventCalendar({ events }: { events: ClubEvent[] }) {
 
   function shiftMonth(delta: number) {
     setCursor((current) => {
-      const next = new Date(Date.UTC(current.year, current.month + delta, 1))
-      return { year: next.getUTCFullYear(), month: next.getUTCMonth() }
+      const next = new Date(
+        Date.UTC(current.year, current.month + delta, 1)
+      )
+
+      return {
+        year: next.getUTCFullYear(),
+        month: next.getUTCMonth(),
+      }
     })
+
     setSelected(null)
   }
 
-  const selectedEvents = selected ? (byDate.get(selected) ?? []) : []
+  const selectedEvents = selected ? byDate.get(selected) ?? [] : []
 
   return (
-    <section id="calendar" className="w-full space-y-6">
-      <div className="space-y-2 text-center">
-        <p className="text-xs font-semibold tracking-[0.18em] text-cyan-200 uppercase">
+    <section id="calendar" className="mx-auto w-full max-w-2xl space-y-5">
+      {/* Header */}
+      <div className="text-center">
+        <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-300">
           Club Calendar
         </p>
-        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          Every event, month by month
+
+        <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          Upcoming Events
         </h2>
       </div>
 
-      <div className="rounded-3xl border border-white/15 bg-white/5 p-4 backdrop-blur-sm sm:p-6">
+      {/* Calendar */}
+      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 shadow-xl backdrop-blur-md sm:p-5">
+        {/* Month navigation */}
         <div className="mb-4 flex items-center justify-between">
           <Button
             size="icon"
-            variant="outline"
+            variant="ghost"
             aria-label="Previous month"
             onClick={() => shiftMonth(-1)}
-            className="rounded-full border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white"
+            className="size-8 rounded-full text-slate-400 hover:bg-white/10 hover:text-white"
           >
             <ChevronLeft className="size-4" />
           </Button>
-          <p className="text-lg font-semibold text-white">{monthLabel}</p>
+
+          <div className="text-center">
+            <p className="text-sm font-semibold text-white">
+              {monthLabel}
+            </p>
+            <p className="mt-0.5 text-[10px] text-slate-500">
+              Select a highlighted day
+            </p>
+          </div>
+
           <Button
             size="icon"
-            variant="outline"
+            variant="ghost"
             aria-label="Next month"
             onClick={() => shiftMonth(1)}
-            className="rounded-full border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white"
+            className="size-8 rounded-full text-slate-400 hover:bg-white/10 hover:text-white"
           >
             <ChevronRight className="size-4" />
           </Button>
         </div>
 
-        <div className="grid grid-cols-7 gap-1 text-center text-xs text-slate-400">
-          {weekdays.map((weekday) => (
-            <span key={weekday} className="py-1">
+        {/* Weekdays */}
+        <div className="mb-1 grid grid-cols-7 text-center">
+          {weekdays.map((weekday, index) => (
+            <span
+              key={`${weekday}-${index}`}
+              className="py-1.5 text-[10px] font-medium uppercase text-slate-500"
+            >
               {weekday}
             </span>
           ))}
         </div>
 
-        <div className="mt-1 grid grid-cols-7 gap-1">
+        {/* Days */}
+        <div className="grid grid-cols-7 gap-1">
           {Array.from({ length: firstWeekday }, (_, index) => (
-            <span key={`pad-${index}`} />
+            <span key={`empty-${index}`} />
           ))}
 
           {Array.from({ length: daysInMonth }, (_, index) => {
@@ -111,6 +141,7 @@ export function EventCalendar({ events }: { events: ClubEvent[] }) {
             const key = dayKey(cursor.year, cursor.month, day)
             const dayEvents = byDate.get(key) ?? []
             const hasEvents = dayEvents.length > 0
+            const isSelected = selected === key
 
             return (
               <button
@@ -122,47 +153,63 @@ export function EventCalendar({ events }: { events: ClubEvent[] }) {
                     ? `${dayEvents.length} event(s) on ${key}`
                     : undefined
                 }
-                aria-pressed={selected === key}
-                onClick={() => setSelected(selected === key ? null : key)}
+                onClick={() =>
+                  setSelected(isSelected ? null : key)
+                }
                 className={cn(
-                  "aspect-square rounded-xl border text-sm transition-colors",
+                  "relative mx-auto flex size-9 items-center justify-center rounded-lg text-xs transition-all",
                   hasEvents
-                    ? "border-cyan-300/50 bg-cyan-300/15 font-semibold text-white hover:bg-cyan-300/25"
-                    : "border-transparent text-slate-400",
-                  selected === key && "border-cyan-200 bg-cyan-300/35"
+                    ? "cursor-pointer font-semibold text-white hover:scale-105 hover:bg-cyan-300/20"
+                    : "cursor-default text-slate-600",
+                  isSelected &&
+                    "bg-cyan-300/20 text-cyan-200 ring-1 ring-cyan-300/50"
                 )}
               >
                 {day}
+
+                {hasEvents && (
+                  <span className="absolute bottom-1 size-1 rounded-full bg-cyan-300" />
+                )}
               </button>
             )
           })}
         </div>
+
+        {/* Legend */}
+        <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-slate-500">
+          <span className="size-1.5 rounded-full bg-cyan-300" />
+          Event available
+        </div>
       </div>
 
-      {selected ? (
-        <div className="space-y-3 rounded-2xl border border-white/15 bg-white/5 px-5 py-4">
-          <p className="text-sm font-semibold text-white">
+      {/* Selected event */}
+      {selected && selectedEvents.length > 0 ? (
+        <div className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
+          <p className="mb-2 px-1 text-xs font-medium text-slate-400">
             {formatEventDate(selected)}
           </p>
-          <ul className="space-y-2">
+
+          <div className="space-y-2">
             {selectedEvents.map((event) => (
-              <li key={event.slug}>
-                <Link
-                  href={`/events/${event.slug}`}
-                  className="flex items-center justify-between gap-4 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white hover:border-cyan-300/40"
-                >
-                  <span className="min-w-0 truncate">{event.title}</span>
-                  <span className="shrink-0 text-xs text-slate-400">
-                    {event.category}
-                  </span>
-                </Link>
-              </li>
+              <Link
+                key={event.slug}
+                href={`/events/${event.slug}`}
+                className="flex items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5 transition hover:border-cyan-300/30 hover:bg-white/[0.07]"
+              >
+                <span className="min-w-0 truncate text-xs font-medium text-white">
+                  {event.title}
+                </span>
+
+                <span className="shrink-0 rounded-full bg-white/5 px-2 py-1 text-[9px] text-slate-400">
+                  {event.category}
+                </span>
+              </Link>
             ))}
-          </ul>
+          </div>
         </div>
       ) : (
-        <p className="text-center text-sm text-slate-400">
-          Highlighted days have events - pick one to see what is on.
+        <p className="text-center text-[11px] text-slate-500">
+          Select a highlighted date to view events.
         </p>
       )}
     </section>

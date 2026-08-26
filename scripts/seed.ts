@@ -7,7 +7,7 @@ config({ path: [".env.local", ".env"] })
 import { connectToDatabase } from "../lib/db"
 import { EventModel } from "../lib/models/event"
 import { Member } from "../lib/models/member"
-import { seedEvents } from "../lib/events"
+import { events as seedEvents } from "../lib/events"
 
 /**
  * Loads the initial member account and the seed events into MongoDB. Safe to
