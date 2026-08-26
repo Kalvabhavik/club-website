@@ -58,33 +58,44 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function NavigationMenuDemo() {
   return (
-    <div className="w-full flex justify-center">
+    <div className="flex w-full justify-center">
       <NavigationMenu>
-        <NavigationMenuList>
-        <NavigationMenuItem>
-          <Link href="/" className="flex items-center">
-            <img
-              src={"favicon.ico"}
-              alt="Logo"
-              className="h-8 w-auto object-contain mr-2"
-            />
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink>Getting started</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem className="hidden md:flex">
-          <NavigationMenuLink>Components</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink>With Icon</NavigationMenuLink>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink
-            className={navigationMenuTriggerStyle()}
-            render={<Link href="/docs">Docs</Link>}
-          />
-        </NavigationMenuItem>
+        <NavigationMenuList className="flex w-full flex-wrap items-center justify-center gap-1">
+          <NavigationMenuItem>
+            <Link href="/" className="flex items-center">
+              <img
+                src={"favicon.ico"}
+                alt="Logo"
+                className="mr-1 h-12 w-auto object-contain sm:mr-2 sm:h-16 lg:mr-4 lg:h-20"
+              />
+            </Link>
+          </NavigationMenuItem>
+          <div className="flex flex-wrap items-center justify-center gap-2 rounded-full border border-blue-900/20 px-3 py-2 sm:px-5 sm:py-3 lg:px-9 lg:py-4">
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                render={<Link href="/">About</Link>}
+              />
+            </NavigationMenuItem>
+            <NavigationMenuItem className="hidden sm:flex">
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                render={<Link href="/members">Members</Link>}
+              />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                render={<Link href="/events">Events</Link>}
+              />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                render={<Link href="/resources">Resources</Link>}
+              />
+            </NavigationMenuItem>
+          </div>
         </NavigationMenuList>
       </NavigationMenu>
     </div>
@@ -103,7 +114,9 @@ function ListItem({
         render={
           <Link href={href}>
             <div className="flex flex-col gap-2 text-xl">
-              <div className="leading-none font-medium">{title}</div>
+              <div className="leading-none font-stretch-extra-expanded">
+                {title}
+              </div>
               <div className="line-clamp-2 text-muted-foreground">
                 {children}
               </div>

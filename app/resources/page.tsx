@@ -1,5 +1,5 @@
-import { Hero } from "@/components/hero"
 import { NavigationMenuDemo } from "@/components/navigation"
+import { Button } from "@base-ui/react"
 
 export const metadata = {
   title: "OS Code IIIT Dharwad",
@@ -33,7 +33,7 @@ export default function Page() {
           <NavigationMenuDemo />
         </div>
         <div className="w-full">
-          <Hero />
+          <button>Hello</button>
           {/* TODO: FAQ and Footer */}
         </div>
       </main>
