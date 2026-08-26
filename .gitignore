@@ -30,6 +30,10 @@ pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+<<<<<<< HEAD
+=======
+!.env.example
+>>>>>>> 22a4874 (ADD:EVENTS)
 
 # typescript
 *.tsbuildinfo

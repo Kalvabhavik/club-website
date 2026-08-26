@@ -95,6 +95,12 @@ export function NavigationMenuDemo() {
                 render={<Link href="/resources">Resources</Link>}
               />
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                render={<Link href="/login">Login</Link>}
+              />
+            </NavigationMenuItem>
           </div>
         </NavigationMenuList>
       </NavigationMenu>
