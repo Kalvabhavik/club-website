@@ -1,5 +1,9 @@
 export type EventCategory =
-  "Workshop" | "Hackathon" | "Competition" | "Talk" | "Meetup"
+  | "Workshop"
+  | "Hackathon"
+  | "Competition"
+  | "Talk"
+  | "Meetup"
 
 export type RegistrationStatus = "open" | "soon" | "closed"
 
@@ -43,8 +47,10 @@ export type ClubEvent = {
   featured?: boolean
 }
 
-/** Initial content loaded into MongoDB by `npm run seed`. */
-export const seedEvents: ClubEvent[] = [
+
+export const clubCalendarUrl = "https://calendar.google.com/"
+
+export const events: ClubEvent[] = [
   {
     slug: "technovation-2026",
     title: "Technovation 2026",
@@ -61,11 +67,7 @@ export const seedEvents: ClubEvent[] = [
       "Technovation is the club's annual tech fest. The day mixes competitive tracks with an open source showcase where members demo what they have shipped over the year, plus lightning talks from alumni and a hiring corner for internships.",
     tags: ["tech fest", "showcase", "competition"],
     organizers: [
-      {
-        name: "OS Code Core Team",
-        role: "Organizer",
-        github: "os-code-iiitdwd",
-      },
+      { name: "OS Code Core Team", role: "Organizer", github: "os-code-iiitdwd" },
     ],
     gallery: [],
     resources: [],
@@ -90,11 +92,7 @@ export const seedEvents: ClubEvent[] = [
       "A hands-on workshop that takes you from installing Git to getting a pull request merged. We cover branching, commits, forks, review etiquette and how to find a good first issue in a real project. Bring a laptop; we finish the session with everyone having opened at least one PR.",
     tags: ["git", "github", "beginner"],
     organizers: [
-      {
-        name: "OS Code Core Team",
-        role: "Organizer",
-        github: "os-code-iiitdwd",
-      },
+      { name: "OS Code Core Team", role: "Organizer", github: "os-code-iiitdwd" },
     ],
     gallery: [],
     resources: [],
@@ -158,11 +156,7 @@ export const seedEvents: ClubEvent[] = [
       "The Annual Hackathon is OS Code Club's biggest event of the year. Teams of up to four spend 24 hours turning an idea into a working, publicly licensed project. Mentors from the club and alumni working in industry review progress every few hours, and the day closes with live demos judged on impact, code quality and how welcoming the repository is to new contributors.",
     tags: ["24-hour", "teams", "demo day"],
     organizers: [
-      {
-        name: "OS Code Core Team",
-        role: "Organizer",
-        github: "os-code-iiitdwd",
-      },
+      { name: "OS Code Core Team", role: "Organizer", github: "os-code-iiitdwd" },
     ],
     gallery: [],
     resources: [
@@ -186,11 +180,7 @@ export const seedEvents: ClubEvent[] = [
     organizers: [{ name: "OS Code Core Team", role: "Organizer" }],
     gallery: [],
     resources: [
-      {
-        label: "Workshop repository",
-        href: "https://github.com/",
-        type: "repo",
-      },
+      { label: "Workshop repository", href: "https://github.com/", type: "repo" },
     ],
     attendees: 64,
   },
@@ -210,11 +200,7 @@ export const seedEvents: ClubEvent[] = [
     organizers: [{ name: "OS Code Core Team", role: "Organizer" }],
     gallery: [],
     resources: [
-      {
-        label: "Setup checklist",
-        href: "https://github.com/",
-        type: "article",
-      },
+      { label: "Setup checklist", href: "https://github.com/", type: "article" },
     ],
     attendees: 95,
   },
@@ -234,11 +220,7 @@ export const seedEvents: ClubEvent[] = [
     organizers: [{ name: "OS Code Core Team", role: "Organizer" }],
     gallery: [],
     resources: [
-      {
-        label: "Proposal template",
-        href: "https://github.com/",
-        type: "article",
-      },
+      { label: "Proposal template", href: "https://github.com/", type: "article" },
     ],
     attendees: 70,
   },
@@ -265,14 +247,14 @@ export function getEventStart(event: ClubEvent): string {
   return event.startsAt ?? `${event.date}T00:00:00Z`
 }
 
-export function getUpcomingEvents(list: ClubEvent[]): ClubEvent[] {
+export function getUpcomingEvents(list: ClubEvent[] = events): ClubEvent[] {
   const today = startOfToday()
   return list
     .filter((event) => timestamp(event) >= today)
     .sort((a, b) => timestamp(a) - timestamp(b))
 }
 
-export function getPastEvents(list: ClubEvent[]): ClubEvent[] {
+export function getPastEvents(list: ClubEvent[] = events): ClubEvent[] {
   const today = startOfToday()
   return list
     .filter((event) => timestamp(event) < today)
@@ -280,15 +262,24 @@ export function getPastEvents(list: ClubEvent[]): ClubEvent[] {
 }
 
 export function getFeaturedUpcomingEvent(
-  list: ClubEvent[]
+  list: ClubEvent[] = events
 ): ClubEvent | undefined {
   const upcoming = getUpcomingEvents(list)
   return upcoming.find((event) => event.featured) ?? upcoming[0]
 }
 
-export function getFeaturedPastEvent(list: ClubEvent[]): ClubEvent | undefined {
+export function getFeaturedPastEvent(
+  list: ClubEvent[] = events
+): ClubEvent | undefined {
   const past = getPastEvents(list)
   return past.find((event) => event.featured) ?? past[0]
+}
+
+export function getEventBySlug(
+  slug: string,
+  list: ClubEvent[] = events
+): ClubEvent | undefined {
+  return list.find((event) => event.slug === slug)
 }
 
 export function getEventYears(list: ClubEvent[]): string[] {
@@ -303,18 +294,13 @@ export type PastEventStats = {
   resourcesPublished: number
 }
 
-export function getPastEventStats(list: ClubEvent[]): PastEventStats {
+export function getPastEventStats(list: ClubEvent[] = events): PastEventStats {
   const past = getPastEvents(list)
-  const attendees = past.reduce(
-    (total, event) => total + (event.attendees ?? 0),
-    0
-  )
+  const attendees = past.reduce((total, event) => total + (event.attendees ?? 0), 0)
   return {
     eventsHosted: past.length,
     peopleReached:
-      attendees >= 100
-        ? `${Math.floor(attendees / 100) * 100}+`
-        : `${attendees}`,
+      attendees >= 100 ? `${Math.floor(attendees / 100) * 100}+` : `${attendees}`,
     resourcesPublished: past.reduce(
       (total, event) => total + event.resources.length,
       0
