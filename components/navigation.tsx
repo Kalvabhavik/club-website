@@ -66,7 +66,7 @@ export function NavigationMenuDemo() {
               <img
                 src={"favicon.ico"}
                 alt="Logo"
-                className="mr-1 h-12 w-auto object-contain sm:mr-2 sm:h-16 lg:mr-4 lg:h-20"
+                className="my-target mr-1 h-12 w-auto object-contain sm:mr-2 sm:h-16 lg:mr-4 lg:h-20"
               />
             </Link>
           </NavigationMenuItem>
@@ -74,31 +74,31 @@ export function NavigationMenuDemo() {
             <NavigationMenuItem>
               <NavigationMenuLink
                 className={navigationMenuTriggerStyle()}
-                render={<Link href="/">About</Link>}
+                render={<Link href="/" className="my-target">About</Link>}
               />
             </NavigationMenuItem>
             <NavigationMenuItem className="hidden sm:flex">
               <NavigationMenuLink
                 className={navigationMenuTriggerStyle()}
-                render={<Link href="/members">Members</Link>}
+                render={<Link href="/members" className="my-target">Members</Link>}
               />
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink
                 className={navigationMenuTriggerStyle()}
-                render={<Link href="/events">Events</Link>}
+                render={<Link href="/events" className="my-target">Events</Link>}
               />
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink
                 className={navigationMenuTriggerStyle()}
-                render={<Link href="/resources">Resources</Link>}
+                render={<Link href="/resources" className="my-target">Resources</Link>}
               />
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink
                 className={navigationMenuTriggerStyle()}
-                render={<Link href="/login">Login</Link>}
+                render={<Link href="/login" className="my-target">Login</Link>}
               />
             </NavigationMenuItem>
           </div>

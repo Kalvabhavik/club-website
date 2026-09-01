@@ -2,6 +2,7 @@ import { EventsSections } from "@/components/events/events-sections"
 import { NavigationMenuDemo } from "@/components/navigation"
 import { listEvents } from "@/lib/event-service"
 import { getSession } from "@/lib/session"
+import LiquidEther from "@/components/LiquidEther"
 
 export const metadata = {
   title: "Events | OS Code IIIT Dharwad",
@@ -20,11 +21,11 @@ export default async function Page() {
       <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-cyan-400/25 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-emerald-400/15 blur-3xl" />
 
-      <main className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 py-6 sm:px-6 lg:px-8">
+      <main className=" mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 py-6 sm:px-6 lg:px-8">
         <div className="w-full">
           <NavigationMenuDemo />
         </div>
-
+        
         <EventsSections events={events} memberName={session?.name ?? null} />
       </main>
     </div>

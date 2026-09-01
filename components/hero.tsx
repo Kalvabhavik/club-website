@@ -40,11 +40,12 @@ export function Hero() {
 					</div>
 
 					<div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-						<Link
+						<Link 
 							href="/events"
 							className={cn(
+								
 								buttonVariants({ size: "lg" }),
-								"h-10 w-full rounded-full bg-cyan-300 px-5 text-slate-900 hover:bg-cyan-200 sm:w-auto"
+								"my-target h-10 w-full rounded-full bg-cyan-300 px-5 text-slate-900 hover:bg-cyan-200 sm:w-auto"
 							)}
 						>
 							Explore Events
@@ -54,7 +55,7 @@ export function Hero() {
 							href="/resources"
 							className={cn(
 								buttonVariants({ variant: "outline", size: "lg" }),
-								"h-10 w-full rounded-full border-white/35 bg-transparent px-5 text-white hover:bg-white/10 hover:text-white sm:w-auto"
+								"my-target h-10 w-full rounded-full border-white/35 bg-transparent px-5 text-white hover:bg-white/10 hover:text-white sm:w-auto"
 							)}
 						>
 							Start Contributing
@@ -100,9 +101,9 @@ export function Hero() {
 
 			<div className="relative mt-9 grid grid-cols-1 gap-3 sm:grid-cols-3">
 				{stats.map((item) => (
-					<div
+					<div 
 						key={item.label}
-						className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 backdrop-blur-sm"
+						className="my-target rounded-2xl border border-white/15 bg-white/10 px-4 py-4 backdrop-blur-sm"
 					>
 						<p className="text-3xl font-semibold tracking-tight">{item.value}</p>
 						<p className="mt-1 text-sm text-slate-200">{item.label}</p>

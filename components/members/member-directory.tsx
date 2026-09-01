@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Search, Users } from "lucide-react"
-
+import BorderGlow from '@/components/BorderGlow';
 import { MemberCard } from "@/components/members/member-card"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -36,6 +36,7 @@ export function MemberDirectory({ members }: { members: ClubMember[] }) {
 
   return (
     <section className="w-full space-y-10">
+
       <div className="space-y-2 text-center">
         <p className="text-xs font-semibold tracking-[0.18em] text-cyan-200 uppercase">
           Members
@@ -48,27 +49,40 @@ export function MemberDirectory({ members }: { members: ClubMember[] }) {
           together.
         </p>
       </div>
-
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 backdrop-blur-sm">
-          <p className="text-3xl font-semibold tracking-tight text-white">
-            {stats.total}+
-          </p>
-          <p className="mt-1 text-sm text-slate-300">Total Members</p>
+      
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <BorderGlow
+        edgeSensitivity={30}
+        glowColor="40 80 80"
+        backgroundColor="#06040a"
+        borderRadius={28}
+        glowRadius={40}
+        glowIntensity={1}
+        coneSpread={25}
+        animated={false}
+        colors={["#131E32"," #060711"]}
+      >
+          <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 backdrop-blur-sm">
+            <p className="text-3xl font-semibold tracking-tight text-white">
+              {stats.total}+
+            </p>
+            <p className="mt-1 text-sm text-slate-300">Total Members</p>
+          </div>
+          </BorderGlow>
+          <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 backdrop-blur-sm">
+            <p className="text-3xl font-semibold tracking-tight text-white">
+              {stats.core}
+            </p>
+            <p className="mt-1 text-sm text-slate-300">Leads &amp; Core Team</p>
+          </div>
+          <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 backdrop-blur-sm">
+            <p className="text-3xl font-semibold tracking-tight text-white">
+              {stats.domains}
+            </p>
+            <p className="mt-1 text-sm text-slate-300">Active Domains</p>
+          </div>
         </div>
-        <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 backdrop-blur-sm">
-          <p className="text-3xl font-semibold tracking-tight text-white">
-            {stats.core}
-          </p>
-          <p className="mt-1 text-sm text-slate-300">Leads &amp; Core Team</p>
-        </div>
-        <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 backdrop-blur-sm">
-          <p className="text-3xl font-semibold tracking-tight text-white">
-            {stats.domains}
-          </p>
-          <p className="mt-1 text-sm text-slate-300">Active Domains</p>
-        </div>
-      </div>
+      
 
       <div className="flex flex-col gap-4">
         <label className="relative block">

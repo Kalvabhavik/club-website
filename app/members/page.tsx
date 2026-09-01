@@ -21,7 +21,7 @@ export default function Page() {
         <div className="w-full">
           <NavigationMenuDemo />
         </div>
-
+        
         <MemberDirectory members={members} />
       </main>
     </div>
