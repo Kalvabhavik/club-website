@@ -302,6 +302,17 @@ export function EventFormDialog({
                 className={cn(fieldClass, "h-auto py-2")}
               />
             </label>
+            <label className="space-y-1.5 sm:col-span-2">
+              <span className="text-sm text-slate-300">
+                Resources URLs (one per line)
+              </span>
+              <textarea
+                name="resources"
+                rows={3}
+                defaultValue={event?.resources.join("\n")}
+                className={cn(fieldClass, "h-auto py-2")}
+              />
+            </label>
           </div>
 
           {error ? (

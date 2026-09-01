@@ -11,7 +11,7 @@ import {
   Pencil,
   Users,
 } from "lucide-react"
-
+import AccordionGallery from "@/components/AccordionGallery"
 import { EventCover } from "@/components/events/event-cover"
 import { EventFormDialog } from "@/components/events/event-form-dialog"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -116,19 +116,19 @@ export function EventDetail({
             Photos from this event will be published here soon.
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {event.gallery.map((image, index) => (
-              <div
-                key={image}
-                className="aspect-4/3 overflow-hidden rounded-2xl border border-white/15"
-              >
-                <EventCover
-                  src={image}
-                  alt={`${event.title} photo ${index + 1}`}
-                  seed={`${event.slug}-${index}`}
-                />
-              </div>
-            ))}
+          <div>
+            <AccordionGallery
+            items={[
+              {image:'https://cdn.corenexis.com/f/A1ktjIg4zzt.jpg' ,label:"APP DEV" ,link:"#"},
+              {image:'https://cdn.corenexis.com/f/zeBnIlfxHmB.jpg' ,label:"APP DEV 2" ,link:"#"},
+              {image:'https://cdn.corenexis.com/f/zu1Sjo8EhQR.jpg' ,label:"APP DEV 3" ,link:"#"},
+              {image:'https://cdn.corenexis.com/f/uTONLbUpi4H.jpg' ,label:"APP DEV 4" ,link:"#"},
+
+              
+            
+            ]}
+            grayscale={false}
+            />
           </div>
         )}
       </section>
@@ -183,7 +183,15 @@ export function EventDetail({
                   @{organizer.github}
                   <ExternalLink className="size-3.5" />
                 </a>
-              ) : null}
+              ) : <a
+                  href={`https://github.com/OSCode-IIITDWD`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-1 inline-flex items-center gap-1 text-sm text-cyan-200 hover:text-cyan-100"
+                >
+                  @OSCODE-IIITDWD
+                  <ExternalLink className="size-3.5" />
+                </a>}
             </li>
           ))}
         </ul>
