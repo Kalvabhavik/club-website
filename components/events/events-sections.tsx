@@ -39,7 +39,14 @@ export function EventsSections({
 
   return (
     <>
-      
+      <Button
+              size="lg"
+              onClick={() => setEditing({})}
+              className="h-9 rounded-full bg-cyan-300 px-4 text-slate-900 hover:bg-cyan-200"
+            >
+              <Plus className="size-4" />
+              Add event
+            </Button>
 
       <UpcomingEvents
         events={upcoming}
