@@ -1,155 +1,173 @@
+
 "use client"
 
-import * as React from "react"
-import { Search, Users } from "lucide-react"
-import BorderGlow from '@/components/BorderGlow';
-import { MemberCard } from "@/components/members/member-card"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import {
-  getMemberStats,
-  memberDomains,
-  memberRoles,
-  type ClubMember,
-} from "@/lib/members"
+import { useMemo, useState } from "react"
+import ChromaGrid from "@/components/ChromaGrid"
 
-export function MemberDirectory({ members }: { members: ClubMember[] }) {
-  const [query, setQuery] = React.useState("")
-  const [role, setRole] = React.useState<string>("All")
-  const [domain, setDomain] = React.useState<string>("All")
+type Member = {
+  id?: string
+  name: string
+  role?: string
+  image?: string
+  avatar?: string
+  handle?: string
+  github?: string
+  linkedin?: string
+  [key: string]: unknown
+  year: any
+}
 
-  const stats = React.useMemo(() => getMemberStats(members), [members])
+type MemberDirectoryProps = {
+  members: Member[]
+}
 
-  const filtered = React.useMemo(() => {
-    const needle = query.trim().toLowerCase()
+export function MemberDirectory({ members }: MemberDirectoryProps) {
+  const [search, setSearch] = useState("")
+  const [filter, setFilter] = useState("All")
+
+  const filters = useMemo(() => {
+    const roles = members
+      .map((member) => member.role)
+      .filter((role): role is string => Boolean(role))
+
+    return ["All", ...Array.from(new Set(roles))]
+  }, [members])
+
+  const filteredMembers = useMemo(() => {
+    const searchValue = search.toLowerCase().trim()
+
     return members.filter((member) => {
-      const matchesQuery =
-        needle.length === 0 ||
-        member.name.toLowerCase().includes(needle) ||
-        member.username.toLowerCase().includes(needle) ||
-        member.bio.toLowerCase().includes(needle)
-      const matchesRole = role === "All" || member.role === role
-      const matchesDomain = domain === "All" || member.domains.includes(domain as never)
-      return matchesQuery && matchesRole && matchesDomain
+      const name = member.name?.toLowerCase() ?? ""
+      const role = member.role?.toLowerCase() ?? ""
+      const handle = member.handle?.toLowerCase() ?? ""
+
+      const matchesSearch =
+        !searchValue ||
+        name.includes(searchValue) ||
+        role.includes(searchValue) ||
+        handle.includes(searchValue)
+
+      const matchesFilter =
+        filter === "All" || member.role === filter
+
+      return matchesSearch && matchesFilter
     })
-  }, [members, query, role, domain])
+  }, [members, search, filter])
+
+  const chromaItems = filteredMembers.map((member, index) => {
+    const colors = [
+      "#06B6D4",
+      "#10B981",
+      "#8B5CF6",
+      "#3B82F6",
+      "#F59E0B",
+      "#EC4899",
+    ]
+
+    const borderColor = colors[index % colors.length]
+
+    return {
+      image:
+        member.image ||
+        member.avatar,
+
+      title: member.name,
+
+      subtitle: member.role +" #"+ member.year,
+
+      handle:
+        member.handle ||
+        (typeof member.github === "string"
+          ? `@${member.github.split("/").pop()}`
+          : "@member"),
+
+      borderColor,
+
+      gradient: `linear-gradient(145deg, ${borderColor}, #000)`,
+
+      url:
+        member.github ||
+        member.linkedin ||
+        "#",
+    }
+  })
 
   return (
-    <section className="w-full space-y-10">
+    <section className="w-full">
+      {/* Members Directory Header */}
+      <div className="mb-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Members Directory
+            </h1>
 
-      <div className="space-y-2 text-center">
-        <p className="text-xs font-semibold tracking-[0.18em] text-cyan-200 uppercase">
-          Members
-        </p>
-        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          The people behind OS Code
-        </h2>
-        <p className="mx-auto max-w-xl text-sm text-slate-300 sm:text-base">
-          Leads, core team, contributors and alumni who build, mentor and ship
-          together.
-        </p>
-      </div>
-      
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <BorderGlow
-        edgeSensitivity={30}
-        glowColor="40 80 80"
-        backgroundColor="#06040a"
-        borderRadius={28}
-        glowRadius={40}
-        glowIntensity={1}
-        coneSpread={25}
-        animated={false}
-        colors={["#131E32"," #060711"]}
-      >
-          <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 backdrop-blur-sm">
-            <p className="text-3xl font-semibold tracking-tight text-white">
-              {stats.total}+
+            <p className="mt-2 text-sm text-muted-foreground">
+              Meet the leads, core team, contributors and alumni of OS Code.
             </p>
-            <p className="mt-1 text-sm text-slate-300">Total Members</p>
           </div>
-          </BorderGlow>
-          <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 backdrop-blur-sm">
-            <p className="text-3xl font-semibold tracking-tight text-white">
-              {stats.core}
-            </p>
-            <p className="mt-1 text-sm text-slate-300">Leads &amp; Core Team</p>
-          </div>
-          <div className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 backdrop-blur-sm">
-            <p className="text-3xl font-semibold tracking-tight text-white">
-              {stats.domains}
-            </p>
-            <p className="mt-1 text-sm text-slate-300">Active Domains</p>
+
+          <div className="text-sm text-muted-foreground">
+            {filteredMembers.length}{" "}
+            {filteredMembers.length === 1 ? "member" : "members"}
           </div>
         </div>
-      
+      </div>
 
-      <div className="flex flex-col gap-4">
-        <label className="relative block">
-          <span className="sr-only">Search members</span>
-          <Search className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-slate-400" />
+      {/* Search + Filter */}
+      <div className="mb-10 flex flex-col gap-4 sm:flex-row">
+        {/* Search */}
+        <div className="relative flex-1">
           <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            type="text"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
             placeholder="Search members..."
-            className="h-11 w-full rounded-full border border-white/15 bg-white/5 pr-4 pl-11 text-sm text-white placeholder:text-slate-400 focus-visible:border-cyan-300/60 focus-visible:outline-none"
+            className="h-11 w-full rounded-xl border border-white/10 bg-background/60 px-4 text-sm outline-none backdrop-blur-xl transition placeholder:text-muted-foreground focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
           />
-        </label>
-
-        <div className="flex flex-wrap gap-2">
-          {["All", ...memberRoles].map((option) => (
-            <Button
-              key={option}
-              size="lg"
-              variant={role === option ? "default" : "outline"}
-              aria-pressed={role === option}
-              onClick={() => setRole(option)}
-              className={cn(
-                "h-9 rounded-full px-4",
-                role === option
-                  ? "bg-cyan-300 text-slate-900 hover:bg-cyan-200"
-                  : "border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white"
-              )}
-            >
-              {option}
-            </Button>
-          ))}
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {["All", ...memberDomains].map((option) => (
-            <Button
-              key={option}
-              size="sm"
-              variant={domain === option ? "default" : "outline"}
-              aria-pressed={domain === option}
-              onClick={() => setDomain(option)}
-              className={cn(
-                "h-7 rounded-full px-3 text-xs",
-                domain === option
-                  ? "bg-emerald-300 text-slate-900 hover:bg-emerald-200"
-                  : "border-white/20 bg-transparent text-slate-300 hover:bg-white/10 hover:text-white"
-              )}
-            >
-              {option}
-            </Button>
+        {/* Filter */}
+        <select
+          value={filter}
+          onChange={(event) => setFilter(event.target.value)}
+          className="h-11 rounded-xl border border-white/10 bg-background/60 px-4 text-sm outline-none backdrop-blur-xl transition focus:border-cyan-400/50"
+        >
+          {filters.map((role) => (
+            <option key={role} value={role}>
+              {role}
+            </option>
           ))}
-        </div>
+        </select>
       </div>
 
-      {filtered.length > 0 ? (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((member) => (
-            <MemberCard key={member.username} member={member} />
-          ))}
+      {/* ChromaGrid */}
+      {filteredMembers.length > 0 ? (
+        <div
+          className="relative w-full"
+          style={{
+            minHeight: "400px",
+          }}
+        >
+          <ChromaGrid
+            items={chromaItems}
+            radius={300}
+            damping={0.45}
+            fadeOut={0.6}
+            ease="power3.out"
+          />
         </div>
       ) : (
-        <p className="flex flex-col items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-6 py-12 text-center text-sm text-slate-300">
-          <Users className="size-5 text-slate-400" />
-          No members match these filters.
-        </p>
+        <div className="flex min-h-[300px] items-center justify-center rounded-2xl border border-white/10 bg-white/[0.02]">
+          <div className="text-center">
+            <p className="text-lg font-medium">No members found</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Try changing your search or filter.
+            </p>
+          </div>
+        </div>
       )}
     </section>
   )
 }
+

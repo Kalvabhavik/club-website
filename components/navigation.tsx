@@ -92,7 +92,7 @@ export function NavigationMenuDemo() {
             <NavigationMenuItem>
               <NavigationMenuLink
                 className={navigationMenuTriggerStyle()}
-                render={<Link href="/resources" className="my-target">Resources</Link>}
+                render={<Link href="/resources" className="my-target">Contact Us</Link>}
               />
             </NavigationMenuItem>
             <NavigationMenuItem>

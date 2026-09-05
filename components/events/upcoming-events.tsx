@@ -24,6 +24,7 @@ import {
   type ClubEvent,
 } from "@/lib/events"
 
+
 export function UpcomingEvents({
   events,
   featured,
@@ -142,7 +143,7 @@ export function UpcomingEvents({
                     rel="noreferrer"
                     className={cn(
                       buttonVariants({ size: "lg" }),
-                      "h-10 rounded-full bg-cyan-300 px-5 text-slate-900 hover:bg-cyan-200"
+                      "my-target h-10 rounded-full bg-cyan-300 px-5 text-slate-900 hover:bg-cyan-200"
                     )}
                   >
                     Register Now
@@ -153,7 +154,7 @@ export function UpcomingEvents({
                   href={`/events/${featured.slug}`}
                   className={cn(
                     buttonVariants({ variant: "outline", size: "lg" }),
-                    "h-10 rounded-full border-white/30 bg-transparent px-5 text-white hover:bg-white/10 hover:text-white"
+                    "my-target h-10 rounded-full border-white/30 bg-transparent px-5 text-white hover:bg-white/10 hover:text-white"
                   )}
                 >
                   Event Details
@@ -188,7 +189,7 @@ export function UpcomingEvents({
               aria-pressed={category === option}
               onClick={() => setCategory(option)}
               className={cn(
-                "h-9 rounded-full px-4",
+                "my-target h-9 rounded-full px-4",
                 category === option
                   ? "bg-cyan-300 text-slate-900 hover:bg-cyan-200"
                   : "border-white/25 bg-transparent text-white hover:bg-white/10 hover:text-white"
@@ -222,10 +223,10 @@ export function UpcomingEvents({
           href="#calendar"
           className={cn(
             buttonVariants({ variant: "outline", size: "lg" }),
-            "h-10 rounded-full border-white/30 bg-transparent px-6 text-white hover:bg-white/10 hover:text-white"
+            "my-target h-10 rounded-full border-white/30 bg-transparent px-6 text-white hover:bg-white/10 hover:text-white"
           )}
         >
-          <CalendarDays className="size-4" />
+          <CalendarDays className="my-target size-4" />
           View Calendar
         </a>
       </div>

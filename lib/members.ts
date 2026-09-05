@@ -1,4 +1,4 @@
-export type MemberRole = "Lead" | "Core Team" | "Contributor" | "Alumni"
+export type MemberRole = "Lead" | "Domain Lead" | "Contributor" | "Alumni" | "Core Team"
 
 export type MemberDomain =
   | "Web"
@@ -18,6 +18,7 @@ export type ClubMember = {
   github?: string
   linkedin?: string
   featured?: boolean
+  image?: string
 }
 
 export const memberRoles: MemberRole[] = [
@@ -38,33 +39,38 @@ export const memberDomains: MemberDomain[] = [
 
 export const members: ClubMember[] = [
   {
-    username: "adityarao",
-    name: "Aditya Rao",
+    username: "nituldas",
+    name: "Nitul Das",
     role: "Lead",
     domains: ["Systems", "Community"],
     bio: "Keeps the club's projects, mentors and events moving in the same direction.",
     year: "2023",
-    github: "adityarao",
+    github: "rd6260",
     featured: true,
+    image: "/members/rd.webp"
   },
   {
-    username: "meghanaiyer",
-    name: "Meghana Iyer",
+    username: "rishita",
+    name: "Rishita",
     role: "Lead",
     domains: ["Web", "Design"],
     bio: "Owns the club's web presence and pairs with new members on their first PR.",
     year: "2023",
-    github: "meghanaiyer",
+    github: "rishitha",
     featured: true,
+    image: "/members/Rishita.webp"
   },
   {
-    username: "kabirsingh",
-    name: "Kabir Singh",
-    role: "Core Team",
-    domains: ["ML/AI"],
+    username: "Sufiyan",
+    name: "Sufiyan",
+    role: "Domain Lead",
+    domains: ["DevOps"],
     bio: "Runs the ML reading group and mentors GSoC applicants every spring.",
-    year: "2024",
+    year: "2025",
     github: "kabirsingh",
+        image: "/members/sufiyan.jpg"
+
+
   },
   {
     username: "ritikasharma",

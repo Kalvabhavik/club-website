@@ -3,6 +3,7 @@ import { NavigationMenuDemo } from "@/components/navigation"
 import { listEvents } from "@/lib/event-service"
 import { getSession } from "@/lib/session"
 import LiquidEther from "@/components/LiquidEther"
+import TargetCursor from "@/components/TargetCursor"
 
 export const metadata = {
   title: "Events | OS Code IIIT Dharwad",
@@ -25,6 +26,13 @@ export default async function Page() {
         <div className="w-full">
           <NavigationMenuDemo />
         </div>
+        <TargetCursor
+       cursorColorOnTarget={undefined}
+        targetSelector=".my-target"
+        spinDuration={2}
+        hideDefaultCursor={true}
+        parallaxOn={true}
+        />
         
         <EventsSections events={events} memberName={session?.name ?? null} />
       </main>
