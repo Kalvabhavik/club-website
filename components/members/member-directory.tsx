@@ -54,22 +54,19 @@ export function MemberDirectory({ members }: MemberDirectoryProps) {
     })
   }, [members, search, filter])
 
-  const chromaItems = filteredMembers.map((member, index) => {
-    const colors = [
-      "#06B6D4",
-      "#10B981",
-      "#8B5CF6",
-      "#3B82F6",
-      "#F59E0B",
-      "#EC4899",
-    ]
-
-    const borderColor = colors[index % colors.length]
+  const chromaItems = filteredMembers.map((member) => {
+    const borderColor =
+      member.role === "Lead"
+        ? "#06B6D4"
+        : member.role === "Domain Lead"
+          ? "#F59E0B"
+          : "#10B981"
 
     return {
       image:
         member.image ||
-        member.avatar,
+        member.avatar ||
+        "/members/rd.webp",
 
       title: member.name,
 
@@ -147,6 +144,7 @@ export function MemberDirectory({ members }: MemberDirectoryProps) {
           className="relative w-full"
           style={{
             minHeight: "400px",
+            maxHeight: "500px"
           }}
         >
           <ChromaGrid

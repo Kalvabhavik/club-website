@@ -1,0 +1,18 @@
+Name:  	What is your domain :	What is your role?
+yash,	core	,something something
+J. Neeha Chaitra,	Event management and social media	Managing the socials and announcements of the club and also organising the events of the club
+Rohan Das,	Dev, DevOps	Lead
+Utkarsh Gupta,	AI/ML	member
+Kalva bhavik,	App dev	Member
+Atharav sethi,	Web dev and cp	Technical and backend 
+Aman Kumar,	AI/ML and Dsa/cp	Technical and ai/ml and club discussions
+Saladi Rishita, 	Competitive Programming 	Co-lead 
+Kritika Kumari, 	AI/ML 	AI/ML 
+Paritosh Ratan Katke, 	DSA/CP	Member
+Md Kamraan Ajmal, 	App Dev	App Dev
+Nagumalli Satwika,	Web dev 	Member
+Ayush Singh,	AI/ML	Member
+Ishita Nerpagar, 	Dsa/Cp	Member
+Apoorva ,	App development 	Member 
+Ved Sudhakar Chandorikar, 	AI/ML	Member
+Darsh Chouhan, 	AI/ML	member
