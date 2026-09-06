@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRight, CalendarDays, ExternalLink } from "lucide-react"
 
+
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -16,8 +17,10 @@ export function Hero() {
 		{/* <section className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-linear-to-br from-slate-950 via-slate-900 to-cyan-900 px-6 py-12 text-white shadow-2xl shadow-slate-950/20 sm:px-10 sm:py-16 lg:px-14"> */}
 			{/* <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-cyan-400/25 blur-3xl" />
 			<div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-emerald-400/15 blur-3xl" /> */}
+			
 
 			<div className="relative grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+				
 				<div className="min-w-0 space-y-7">
 					<p className="inline-flex w-max items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-semibold tracking-[0.18em] uppercase">
 						IIIT Dharwad

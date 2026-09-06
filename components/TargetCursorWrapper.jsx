@@ -5,9 +5,13 @@ import TargetCursor from "./TargetCursor"
 export default function TargetCursorWrapper() {
   return (
     <TargetCursor
-      spinDuration={2}
+      targetSelector=".my-target, a, button, input, select, [role='button']"
+      spinDuration={0}
       hideDefaultCursor={true}
       parallaxOn={true}
+      hoverDuration={0.2}
+      cursorColor="#ffffff"
+      cursorColorOnTarget="#ffffff"
     />
   )
 }

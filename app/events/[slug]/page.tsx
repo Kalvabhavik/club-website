@@ -2,6 +2,7 @@ import { EventDetail } from "@/components/events/event-detail"
 import { NavigationMenuDemo } from "@/components/navigation"
 import { findEvent } from "@/lib/event-service"
 import { getSession } from "@/lib/session"
+import TargetCursorWrapper from "@/components/TargetCursorWrapper"
 
 export async function generateMetadata({
   params,
@@ -39,6 +40,7 @@ export default async function Page({
         <div className="w-full">
           <NavigationMenuDemo />
         </div>
+        <TargetCursorWrapper />
 
         <EventDetail event={event} isMember={session !== null} />
       </main>

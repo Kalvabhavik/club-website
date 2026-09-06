@@ -6,6 +6,7 @@ import { NavigationMenuDemo } from "@/components/navigation"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { getSession } from "@/lib/session"
+import TargetCursorWrapper from "@/components/TargetCursorWrapper"
 
 export const metadata = {
   title: "Member Login | OS Code IIIT Dharwad",
@@ -27,6 +28,7 @@ export default async function Page() {
         <div className="w-full">
           <NavigationMenuDemo />
         </div>
+        <TargetCursorWrapper />
 
         <div className="space-y-2 text-center">
           <p className="text-xs font-semibold tracking-[0.18em] text-cyan-200 uppercase">

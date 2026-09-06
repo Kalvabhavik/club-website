@@ -115,6 +115,11 @@ const TargetCursor = ({
       if (spinTl.current) {
         spinTl.current.kill();
       }
+      if (spinDuration <= 0) {
+        spinTl.current = null;
+        gsap.set(cursor, { rotation: 0 });
+        return;
+      }
       spinTl.current = gsap
         .timeline({ repeat: -1 })
         .to(cursor, { rotation: '+=360', duration: spinDuration, ease: 'none' });
@@ -317,7 +322,7 @@ const TargetCursor = ({
         }
 
         resumeTimeout = setTimeout(() => {
-          if (!activeTarget && cursorRef.current && spinTl.current) {
+          if (!activeTarget && cursorRef.current && spinTl.current && spinDuration > 0) {
             const currentRotation = gsap.getProperty(cursorRef.current, 'rotation');
             const normalizedRotation = currentRotation % 360;
             spinTl.current.kill();
@@ -387,7 +392,7 @@ const TargetCursor = ({
   ]);
 
   useEffect(() => {
-    if (isMobile || !cursorRef.current || !spinTl.current) return;
+    if (isMobile || spinDuration <= 0 || !cursorRef.current || !spinTl.current) return;
     if (spinTl.current.isActive()) {
       spinTl.current.kill();
       spinTl.current = gsap

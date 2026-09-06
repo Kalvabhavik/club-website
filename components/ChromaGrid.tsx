@@ -171,7 +171,7 @@ export const ChromaGrid: React.FC<ChromaGridProps> = ({
       {data.map((c, i) => (
         <article
           key={i}
-          className="chroma-card"
+          className="chroma-card my-target"
           onMouseMove={handleCardMove}
           onClick={() => handleCardClick(c.url)}
           style={

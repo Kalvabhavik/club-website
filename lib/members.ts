@@ -1,13 +1,13 @@
-export type MemberRole = "Lead" | "Domain Lead" | "Contributor" | "Alumni" | "Core Team"
+export type MemberRole = "Lead" | "Co-lead" | "Domain Lead"  | "Alumni" | "Core Team" | "Member"
 
 export type MemberDomain =
-  | "Web"
-  | "ML/AI"
-  | "Systems"
+  | "Core"
+  | "Dev"
+  | "CP/DSA"
+  | "AI/ML"
+  | "OpenSource team"
+  | "Social Media team"
   | "DevOps"
-  | "Design"
-  | "Community" 
-  | "AppDev"
 
 export type ClubMember = {
   username: string
@@ -24,20 +24,23 @@ export type ClubMember = {
 
 export const memberRoles: MemberRole[] = [
   "Lead",
+  "Co-lead",
   "Domain Lead",
   "Core Team",
-  "Contributor",
+  
   "Alumni",
+  "Member"
 ]
 
 export const memberDomains: MemberDomain[] = [
-  "Web",
-  "ML/AI",
-  "Systems",
-  "DevOps",
-  "Design",
-  "Community",
-  "AppDev",
+  "Core",
+  "Dev",
+  "CP/DSA",
+  "AI/ML",
+  "OpenSource team",
+  "Social Media team",
+  "DevOps"
+  
 ]
 
 export const members: ClubMember[] = [
@@ -45,7 +48,7 @@ export const members: ClubMember[] = [
     username: "nituldas",
     name: "Nitul Das",
     role: "Lead",
-    domains: ["Systems", "Community"],
+    domains: ["Dev","DevOps"],
     bio: "Keeps the club's projects, mentors and events moving in the same direction.",
     year: "2023",
     github: "rd6260",
@@ -55,8 +58,8 @@ export const members: ClubMember[] = [
   {
     username: "rishita",
     name: "Rishita",
-    role: "Lead",
-    domains: ["Web", "Design"],
+    role: "Co-lead",
+    domains: ["CP/DSA"],
     bio: "Owns the club's web presence and pairs with new members on their first PR.",
     year: "2023",
     github: "rishitha",
@@ -70,7 +73,7 @@ export const members: ClubMember[] = [
     domains: ["DevOps"],
     bio: "Runs the ML reading group and mentors GSoC applicants every spring.",
     year: "2025",
-    github: "kabirsingh",
+    github: "sufiyan",
         image: "/members/sufiyan.jpg"
 
 
@@ -80,7 +83,7 @@ export const members: ClubMember[] = [
     username: "yash",
     name: "Yash",
     role: "Core Team",
-    domains: ["Community"],
+    domains: ["Core"],
     bio: "Helps coordinate the club's core activities and member initiatives.",
     year: "2025",
     github: "yash",
@@ -89,8 +92,8 @@ export const members: ClubMember[] = [
   {
     username: "neeha-chaitra",
     name: "J. Neeha Chaitra",
-    role: "Core Team",
-    domains: ["Community"],
+    role: "Member",
+    domains: ["Social Media team"],
     bio: "Manages social updates and helps organise the club's events.",
     year: "2025",
     github: "neeha-chaitra",
@@ -99,8 +102,8 @@ export const members: ClubMember[] = [
   {
     username: "utkarsh-gupta",
     name: "Utkarsh Gupta",
-    role: "Contributor",
-    domains: ["ML/AI"],
+    role: "Member",
+    domains: ["AI/ML"],
     bio: "Explores machine learning and contributes to the club's technical work.",
     year: "2025",
     github: "utkarsh-gupta",
@@ -109,18 +112,28 @@ export const members: ClubMember[] = [
   {
     username: "kalva-bhavik",
     name: "Kalva Bhavik",
-    role: "Contributor",
-    domains: ["AppDev"],
+    role: "Member",
+    domains: ["Dev"],
     bio: "Builds mobile experiences and experiments with practical app development.",
     year: "2025",
     github: "kalva-bhavik",
     image: "/members/KALVA BHAVIK.jpg"
   },
   {
+    username: "apoorva",
+    name: "Apoorva",
+    role: "Member",
+    domains: ["Dev"],
+    bio: "Learns app development and contributes to collaborative club projects.",
+    year: "2025",
+    github: "apoorva",
+    image: "/members/APOORVA S JADHAV.jpeg"
+  },
+  {
     username: "atharav-sethi",
     name: "Atharav Sethi",
-    role: "Domain Lead",
-    domains: ["Web", "Systems"],
+    role: "Member",
+    domains: ["Dev"],
     bio: "Works across web development and competitive programming with a focus on strong technical foundations.",
     year: "2025",
     github: "atharav-sethi",
@@ -129,8 +142,8 @@ export const members: ClubMember[] = [
   {
     username: "aman-kumar",
     name: "Aman Kumar",
-    role: "Domain Lead",
-    domains: ["ML/AI", "Systems"],
+    role: "Member",
+    domains: ["CP/DSA"],
     bio: "Contributes to AI and machine learning work while supporting technical club discussions.",
     year: "2025",
     github: "aman-kumar",
@@ -140,7 +153,7 @@ export const members: ClubMember[] = [
     username: "kritika-kumari",
     name: "Kritika Kumari",
     role: "Domain Lead",
-    domains: ["ML/AI"],
+    domains: ["AI/ML"],
     bio: "Explores machine learning topics and shares practical ideas with the club.",
     year: "2025",
     github: "kritika-kumari",
@@ -149,8 +162,8 @@ export const members: ClubMember[] = [
   {
     username: "paritosh-ratan-katke",
     name: "Paritosh Ratan Katke",
-    role: "Contributor",
-    domains: ["Systems"],
+    role: "Member",
+    domains: ["CP/DSA"],
     bio: "Practises data structures and algorithms and contributes to club activities.",
     year: "2025",
     github: "paritosh-ratan-katke",
@@ -159,8 +172,8 @@ export const members: ClubMember[] = [
   {
     username: "md-kamraan-ajmal",
     name: "Md Kamraan Ajmal",
-    role: "Contributor",
-    domains: ["AppDev"],
+    role: "Domain Lead",
+    domains: ["Dev"],
     bio: "Builds app development projects and learns through hands-on collaboration.",
     year: "2025",
     github: "md-kamraan-ajmal",
@@ -169,8 +182,8 @@ export const members: ClubMember[] = [
   {
     username: "nagumalli-satwika",
     name: "Nagumalli Satwika",
-    role: "Contributor",
-    domains: ["Web"],
+    role: "Member",
+    domains: ["Dev"],
     bio: "Learns and contributes to web development projects with the club.",
     year: "2025",
     github: "nagumalli-satwika",
@@ -179,8 +192,8 @@ export const members: ClubMember[] = [
   {
     username: "ayush-singh",
     name: "Ayush Singh",
-    role: "Contributor",
-    domains: ["ML/AI"],
+    role: "Member",
+    domains: ["AI/ML"],
     bio: "Explores AI and machine learning through club projects and discussions.",
     year: "2025",
     github: "ayush-singh",
@@ -189,28 +202,19 @@ export const members: ClubMember[] = [
   {
     username: "ishita-nerpagar",
     name: "Ishita Sagar Nerpagar",
-    role: "Contributor",
-    domains: ["Systems"],
+    role: "Member",
+    domains: ["CP/DSA"],
     bio: "Builds problem-solving skills through data structures and algorithms.",
     year: "2025",
     github: "ishita-nerpagar",
     image: "/members/ISHITA SAGAR NERPAGAR.jpg"
   },
-  {
-    username: "apoorva",
-    name: "Apoorva",
-    role: "Contributor",
-    domains: ["AppDev"],
-    bio: "Learns app development and contributes to collaborative club projects.",
-    year: "2025",
-    github: "apoorva",
-    image: "/members/APOORVA S JADHAV.jpeg"
-  },
+  
   {
     username: "ved-sudhakar",
     name: "Ved Sudhakar",
-    role: "Contributor",
-    domains: ["ML/AI"],
+    role: "Member",
+    domains: ["AI/ML"],
     bio: "Explores AI and machine learning through practical experiments.",
     year: "2025",
     github: "ved-sudhakar",
@@ -219,8 +223,8 @@ export const members: ClubMember[] = [
   {
     username: "darsh-chouhan",
     name: "Darsh Chouhan",
-    role: "Contributor",
-    domains: ["ML/AI"],
+    role: "Member",
+    domains: ["AI/ML"],
     bio: "Learns machine learning and contributes to the club's technical community.",
     year: "2025",
     github: "darsh-chouhan",

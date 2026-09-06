@@ -73,6 +73,7 @@
   position: relative;
   z-index: 1;
   flex: 1;
+  min-height: 0;
   padding: 10px;
   box-sizing: border-box;
   background: transparent;
@@ -89,9 +90,13 @@
 
 .chroma-info {
   position: relative;
-  z-index: 1;
+  z-index: 5;
+  flex-shrink: 0;
+  min-height: 76px;
   padding: 0.75rem 1rem;
   color: #fff;
+  background: rgba(4, 10, 16, 0.88);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
   font-family: system-ui, sans-serif;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -101,7 +106,7 @@
 
 .chroma-info .role,
 .chroma-info .handle {
-  color: #aaa;
+  color: #d1d5db;
 }
 
 .chroma-overlay {

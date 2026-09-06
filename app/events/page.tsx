@@ -2,8 +2,9 @@ import { EventsSections } from "@/components/events/events-sections"
 import { NavigationMenuDemo } from "@/components/navigation"
 import { listEvents } from "@/lib/event-service"
 import { getSession } from "@/lib/session"
-import LiquidEther from "@/components/LiquidEther"
-import TargetCursor from "@/components/TargetCursor"
+import MoltenMetal from '@/components/MoltenMetal';
+import TargetCursorWrapper from "@/components/TargetCursorWrapper"
+
 
 export const metadata = {
   title: "Events | OS Code IIIT Dharwad",
@@ -19,6 +20,28 @@ export default async function Page() {
 
   return (
     <div className="relative min-h-screen overflow-x-clip">
+       <div className="pointer-events-none fixed -z-10 h-full w-full">
+        <MoltenMetal
+          color1="#1E88E5"
+          color2="#3bc7df"
+          color3="#FFFFFF"
+          speed={0.35}
+          scale={4}
+          detail={3}
+          glow={1.6}
+          coreSize={0.1}
+          swirl={1}
+          fold={-0.2}
+          blackPoint={0.05}
+          brightness={1.3}
+          colorMode="molten"
+          grain={true}
+          grainIntensity={0.05}
+          mouseInteraction={true}
+          mouseStrength={0.3}
+          opacity={1.0}
+        />
+      </div>
       <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-cyan-400/25 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-emerald-400/15 blur-3xl" />
 
@@ -26,13 +49,8 @@ export default async function Page() {
         <div className="w-full">
           <NavigationMenuDemo />
         </div>
-        <TargetCursor
-       cursorColorOnTarget={undefined}
-        targetSelector=".my-target"
-        spinDuration={2}
-        hideDefaultCursor={true}
-        parallaxOn={true}
-        />
+        <TargetCursorWrapper />
+        
         
         <EventsSections events={events} memberName={session?.name ?? null} />
       </main>

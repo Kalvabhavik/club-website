@@ -92,14 +92,11 @@ export function NavigationMenuDemo() {
             <NavigationMenuItem>
               <NavigationMenuLink
                 className={navigationMenuTriggerStyle()}
-                render={<Link href="/resources" className="my-target">Contact Us</Link>}
+                render={<Link href="/resources" className="my-target">Projects</Link>}
               />
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink
-                className={navigationMenuTriggerStyle()}
-                render={<Link href="/login" className="my-target">Login</Link>}
-              />
+              
             </NavigationMenuItem>
           </div>
         </NavigationMenuList>
