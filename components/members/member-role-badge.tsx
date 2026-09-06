@@ -6,8 +6,8 @@ const styles: Record<MemberRole, { dot: string; text: string }> = {
   "Co-lead": { dot: "bg-teal-300", text: "text-teal-200" },
   "Domain Lead": { dot: "bg-blue-400", text: "text-blue-200" },
   "Core Team": { dot: "bg-emerald-400", text: "text-emerald-200" },
-  Contributor: { dot: "bg-sky-400", text: "text-sky-200" },
   Alumni: { dot: "bg-slate-400", text: "text-slate-300" },
+  Member: { dot: "bg-sky-400", text: "text-sky-200" },
 }
 
 export function MemberRoleBadge({
