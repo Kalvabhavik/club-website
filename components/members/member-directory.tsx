@@ -3,6 +3,7 @@
 
 import { useMemo, useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import ChromaGrid from "@/components/ChromaGrid"
 import { MemberRoleBadge } from "@/components/members/member-role-badge"
 import { memberDomains } from "@/lib/members"
@@ -84,10 +85,7 @@ export function MemberDirectory({ members }: MemberDirectoryProps) {
 
       gradient: `linear-gradient(145deg, ${borderColor}, #000)`,
 
-      url:
-        member.github ||
-        member.linkedin ||
-        "#",
+      url: `/members/${member.username}`,
     }
   }
 
@@ -141,8 +139,9 @@ export function MemberDirectory({ members }: MemberDirectoryProps) {
 
           <div className="grid gap-5 md:grid-cols-2">
             {leadership.map((member) => (
-              <article
+              <Link
                 key={member.username}
+                href={`/members/${member.username}`}
                 className="group relative min-h-[40rem] overflow-hidden rounded-[1.75rem] border border-white/15 bg-slate-950 shadow-2xl shadow-cyan-950/20"
               >
                 <Image
@@ -172,7 +171,7 @@ export function MemberDirectory({ members }: MemberDirectoryProps) {
                     ))}
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
