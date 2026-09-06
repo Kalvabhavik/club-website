@@ -260,6 +260,12 @@ export default function Page() {
                 "Fix a typo or improve a lesson",
                 "https://github.com/freeCodeCamp/freeCodeCamp",
               ],
+              [
+                "Open Source Guide",
+                "A practical guide to finding projects, making contributions, and building a healthy open-source community.",
+                "Read the guide and choose your first project",
+                "https://opensource.guide/",
+              ],
             ].map(([name, description, firstTask, href]) => (
               <BorderGlow key={name} className="rounded-2xl" backgroundColor="transparent" borderRadius={20} glowColor="155 70 60" colors={["#34d399", "#22d3ee", "#fbbf24"]}>
               <a
