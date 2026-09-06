@@ -64,7 +64,7 @@ export function NavigationMenuDemo() {
           <NavigationMenuItem>
             <Link href="/" className="flex items-center">
               <img
-                src={"favicon.ico"}
+                src="/favicon.ico"
                 alt="Logo"
                 className="my-target mr-1 h-12 w-auto object-contain sm:mr-2 sm:h-16 lg:mr-4 lg:h-20"
               />
