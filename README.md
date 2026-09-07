@@ -17,3 +17,7 @@ To use the components in your app, import them as follows:
 ```tsx
 import { Button } from "@/components/ui/button";
 ```
+
+## Node version
+
+This project targets Node.js 24 LTS. Use the version pinned in the repo root when running locally or deploying.
