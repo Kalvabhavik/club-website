@@ -100,14 +100,14 @@ export const members: ClubMember[] = [
     image: "/members/JALADURGAM NEEHA CHAITRA.jpg"
   },
   {
-    username: "Adarsh Dudhera",
+    username: "adarsh-dudhera",
     name: "Adarsh Dudhera",
     role: "Member",
     domains: ["Social Media team"],
     bio: "Manages social updates and helps organise the club's events.",
     year: "2025",
-    github: "Adarsh Dudhera",
-    image: "/members/Adarsh.jpg"
+    github: "adarsh-dudhera",
+    image: "/members/Adarsh.jpeg"
   },
   {
     username: "utkarsh-gupta",
