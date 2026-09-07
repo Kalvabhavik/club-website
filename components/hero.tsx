@@ -4,6 +4,7 @@ import { ArrowRight, CalendarDays, ExternalLink } from "lucide-react"
 
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { ClubActivity } from "@/components/club-activity"
 
 const stats = [
 	{ label: "Active Members", value: "10+" },
@@ -65,6 +66,10 @@ export function Hero() {
 							<ArrowRight className="size-4" />
 						</Link>
 					</div>
+				</div>
+
+				<div className="min-w-0">
+					<ClubActivity compact />
 				</div>
 
 				{/* <div className="min-w-0 rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm sm:p-8">

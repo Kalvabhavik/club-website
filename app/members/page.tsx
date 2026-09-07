@@ -38,9 +38,6 @@ export default function Page() {
           opacity={1.0}
         />
       </div>
-      <div className="pointer-events-none fixed -z-10 h-full w-full">
-     
-      </div>
       <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-cyan-400/25 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-emerald-400/15 blur-3xl" />
 

@@ -70,6 +70,16 @@ export function EventCalendar({ events }: { events: ClubEvent[] }) {
   }
 
   const selectedEvents = selected ? byDate.get(selected) ?? [] : []
+  const eventDates = React.useMemo(
+    () => Array.from(byDate.keys()).sort(),
+    [byDate]
+  )
+
+  function selectDate(date: string) {
+    const [year, month] = date.split("-").map(Number)
+    setCursor({ year, month: month - 1 })
+    setSelected(date)
+  }
 
   return (
     <section id="calendar" className="mx-auto w-full max-w-2xl space-y-5">
@@ -103,7 +113,7 @@ export function EventCalendar({ events }: { events: ClubEvent[] }) {
               {monthLabel}
             </p>
             <p className="mt-0.5 text-[10px] text-slate-500">
-              Select a highlighted day
+              {byDate.size} event dates across the calendar
             </p>
           </div>
 
@@ -116,6 +126,42 @@ export function EventCalendar({ events }: { events: ClubEvent[] }) {
           >
             <ChevronRight className="size-4" />
           </Button>
+        </div>
+
+        <div className="mb-4 border-y border-white/10 py-3">
+          <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+            All event dates
+          </p>
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {eventDates.map((date) => {
+              const dateEvents = byDate.get(date) ?? []
+              const active = selected === date
+              const [year, month, day] = date.split("-").map(Number)
+              const label = new Date(Date.UTC(year, month - 1, day)).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                timeZone: "UTC",
+              })
+
+              return (
+                <button
+                  key={date}
+                  type="button"
+                  onClick={() => selectDate(date)}
+                  className={cn(
+                    "my-target flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] font-medium transition-colors",
+                    active
+                      ? "border-cyan-200 bg-cyan-300 text-slate-950"
+                      : "border-cyan-300/25 bg-cyan-300/10 text-cyan-100 hover:border-cyan-200/60 hover:bg-cyan-300/20"
+                  )}
+                  aria-label={`View ${dateEvents.length} event(s) on ${date}`}
+                >
+                  {label}
+                  {dateEvents.length > 1 ? <span className="rounded-full bg-black/20 px-1.5">{dateEvents.length}</span> : null}
+                </button>
+              )
+            })}
+          </div>
         </div>
 
         {/* Weekdays */}
@@ -159,16 +205,18 @@ export function EventCalendar({ events }: { events: ClubEvent[] }) {
                 className={cn(
                   "relative mx-auto flex size-9 items-center justify-center rounded-lg text-xs transition-all",
                   hasEvents
-                    ? "cursor-pointer font-semibold text-white hover:scale-105 hover:bg-cyan-300/20"
-                    : "cursor-default text-slate-600",
+                    ? "my-target cursor-pointer font-semibold text-cyan-50 ring-1 ring-cyan-300/45 bg-cyan-400/20 shadow-[0_0_18px_rgba(34,211,238,0.16)] hover:scale-105 hover:bg-cyan-300/35 hover:ring-cyan-200/70"
+                    : "cursor-default text-white",
                   isSelected &&
-                    "bg-cyan-300/20 text-cyan-200 ring-1 ring-cyan-300/50"
+                    "bg-cyan-300 text-slate-950 ring-2 ring-cyan-100 shadow-[0_0_20px_rgba(103,232,249,0.4)] hover:bg-cyan-200"
                 )}
               >
                 {day}
 
                 {hasEvents && (
-                  <span className="absolute bottom-1 size-1 rounded-full bg-cyan-300" />
+                  <span className="absolute -right-1 -top-1 flex min-w-3.5 items-center justify-center rounded-full border border-slate-950 bg-emerald-300 px-1 text-[8px] font-bold leading-3 text-slate-950">
+                    {dayEvents.length > 1 ? dayEvents.length : ""}
+                  </span>
                 )}
               </button>
             )

@@ -51,8 +51,8 @@ const eventSchema = new Schema(
     description: { type: String, default: "" },
     tags: { type: [String], default: [] },
     organizers: { type: [organizerSchema], default: [] },
-    /** Image links: paths under /public or remote URLs. */
-    gallery: { type: [String], default: [] },
+    /** Mixed keeps older string-only gallery records readable during migration. */
+    gallery: { type: [Schema.Types.Mixed], default: [] },
     resources: { type: [resourceSchema], default: [] },
     registrationStatus: { type: String, enum: ["open", "soon", "closed"] },
     /** Registration form link (Google Form, Unstop, etc.). */

@@ -4,6 +4,7 @@ import {
   eventCategories,
   type ClubEvent,
   type EventCategory,
+  type EventGalleryItem,
   type EventOrganizer,
   type EventResource,
   type RegistrationStatus,
@@ -19,6 +20,25 @@ const resourceTypes: EventResource["type"][] = [
 ]
 
 function toClubEvent(doc: EventDoc): ClubEvent {
+  const gallery: EventGalleryItem[] = (doc.gallery ?? []).flatMap((entry, index) => {
+    if (typeof entry === "string") {
+      const image = entry.trim()
+      return image ? [{ image, label: `Photo ${index + 1}` }] : []
+    }
+
+    if (!entry || typeof entry !== "object") return []
+    const item = entry as Record<string, unknown>
+    const image = text(item.image)
+    return image
+      ? [{
+          image,
+          label: text(item.label) || `Photo ${index + 1}`,
+          link: optionalText(item.link),
+          alt: optionalText(item.alt),
+        }]
+      : []
+  })
+
   return {
     slug: doc.slug,
     title: doc.title,
@@ -37,7 +57,7 @@ function toClubEvent(doc: EventDoc): ClubEvent {
       role: organizer.role,
       github: organizer.github ?? undefined,
     })),
-    gallery: doc.gallery ?? [],
+    gallery,
     resources: (doc.resources ?? []).map((resource) => ({
       label: resource.label,
       href: resource.href,
@@ -93,6 +113,28 @@ function optionalNumber(value: unknown): number | undefined {
 function stringList(value: unknown): string[] {
   if (!Array.isArray(value)) return []
   return value.map(text).filter(Boolean)
+}
+
+function galleryList(value: unknown): EventGalleryItem[] {
+  if (!Array.isArray(value)) return []
+  return value.flatMap((entry, index) => {
+    if (typeof entry === "string") {
+      const image = text(entry)
+      return image ? [{ image, label: `Photo ${index + 1}` }] : []
+    }
+
+    if (!entry || typeof entry !== "object") return []
+    const item = entry as Record<string, unknown>
+    const image = text(item.image)
+    return image
+      ? [{
+          image,
+          label: text(item.label) || `Photo ${index + 1}`,
+          link: optionalText(item.link),
+          alt: optionalText(item.alt),
+        }]
+      : []
+  })
 }
 
 function oneOf<T extends string>(value: unknown, allowed: T[]): T | undefined {
@@ -163,7 +205,7 @@ export function parseEventInput(body: unknown): Omit<ClubEvent, "slug"> {
     description: text(input.description),
     tags: stringList(input.tags),
     organizers,
-    gallery: stringList(input.gallery),
+    gallery: galleryList(input.gallery),
     resources,
     registrationStatus: oneOf(input.registrationStatus, statuses),
     registerUrl: optionalText(input.registerUrl),

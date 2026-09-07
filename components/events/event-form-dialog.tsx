@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { X } from "lucide-react"
+import { LoaderCircle, Plus, Trash2, Upload, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -10,6 +10,7 @@ import {
   eventCategories,
   type ClubEvent,
   type EventCategory,
+  type EventGalleryItem,
   type RegistrationStatus,
 } from "@/lib/events"
 
@@ -18,6 +19,13 @@ const fieldClass =
 
 const modes: ClubEvent["mode"][] = ["offline", "online", "hybrid"]
 const statuses: RegistrationStatus[] = ["open", "soon", "closed"]
+
+const defaultGalleryItem: EventGalleryItem = {
+  image: "",
+  label: "Event highlights",
+  link: "",
+  alt: "",
+}
 
 function toNumber(value: FormDataEntryValue | null): number | undefined {
   const parsed = Number(value)
@@ -40,6 +48,10 @@ export function EventFormDialog({
   const router = useRouter()
   const [error, setError] = React.useState<string | null>(null)
   const [pending, setPending] = React.useState(false)
+  const [galleryItems, setGalleryItems] = React.useState<EventGalleryItem[]>(
+    () => event?.gallery.map((item) => ({ ...item })) ?? []
+  )
+  const [uploadingIndex, setUploadingIndex] = React.useState<number | null>(null)
 
   async function send(method: "POST" | "PUT" | "DELETE", body?: unknown) {
     setPending(true)
@@ -63,6 +75,41 @@ export function EventFormDialog({
     onClose()
   }
 
+  async function uploadGalleryImage(index: number, file: File) {
+    setError(null)
+    setUploadingIndex(index)
+    const body = new FormData()
+    body.set("file", file)
+
+    try {
+      const response = await fetch("/api/uploads/github", {
+        method: "POST",
+        body,
+      })
+      const result = (await response.json().catch(() => null)) as {
+        error?: string
+        url?: string
+      } | null
+
+      if (!response.ok || !result?.url) {
+        setError(result?.error ?? "Could not upload the image.")
+        return
+      }
+
+      setGalleryItems((items) =>
+        items.map((item, itemIndex) =>
+          itemIndex === index
+            ? { ...item, image: result.url!, link: result.url }
+            : item
+        )
+      )
+    } catch {
+      setError("Could not upload the image. Try again.")
+    } finally {
+      setUploadingIndex(null)
+    }
+  }
+
   function handleSubmit(formEvent: React.FormEvent<HTMLFormElement>) {
     formEvent.preventDefault()
     const data = new FormData(formEvent.currentTarget)
@@ -74,10 +121,14 @@ export function EventFormDialog({
       return
     }
 
-    const gallery = toText(data.get("gallery"))
-      .split(/[\n,]/)
-      .map((entry) => entry.trim())
-      .filter(Boolean)
+    const gallery = galleryItems
+      .map((item) => ({
+        image: item.image.trim(),
+        label: item.label.trim() || "Event highlight",
+        link: item.link?.trim() || undefined,
+        alt: item.alt?.trim() || undefined,
+      }))
+      .filter((item) => item.image)
 
     void send(event ? "PUT" : "POST", {
       title,
@@ -291,17 +342,160 @@ export function EventFormDialog({
                 className={cn(fieldClass, "h-auto py-2")}
               />
             </label>
-            <label className="space-y-1.5 sm:col-span-2">
-              <span className="text-sm text-slate-300">
-                Gallery image URLs (one per line)
-              </span>
-              <textarea
-                name="gallery"
-                rows={3}
-                defaultValue={event?.gallery.join("\n")}
-                className={cn(fieldClass, "h-auto py-2")}
-              />
-            </label>
+            <div className="space-y-3 sm:col-span-2">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-sm font-medium text-slate-200">
+                    Gallery panels
+                  </h3>
+                  <p className="mt-1 max-w-xl text-xs text-slate-400">
+                    Upload an image to GitHub or paste a URL. Uploaded images automatically become the panel image and click-through link.
+                  </p>
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() =>
+                    setGalleryItems((items) => [
+                      ...items,
+                      {
+                        ...defaultGalleryItem,
+                        label: `Gallery panel ${items.length + 1}`,
+                      },
+                    ])
+                  }
+                  className="h-9 rounded-full border-white/25 bg-transparent px-3 text-white hover:bg-white/10 hover:text-white"
+                >
+                  <Plus className="size-4" />
+                  Add panel
+                </Button>
+              </div>
+
+              {galleryItems.length === 0 ? (
+                <div className="rounded-2xl border border-dashed border-white/15 px-4 py-5 text-center text-xs text-slate-400">
+                  No gallery panels yet. Add one to show event photos here.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {galleryItems.map((item, index) => (
+                    <div
+                      key={index}
+                      className="grid gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 sm:grid-cols-2"
+                    >
+                      <div className="flex items-center justify-between gap-3 sm:col-span-2">
+                        <span className="text-xs font-semibold tracking-wide text-cyan-200 uppercase">
+                          Panel {index + 1}
+                        </span>
+                        <Button
+                          type="button"
+                          size="icon-sm"
+                          variant="ghost"
+                          aria-label={`Remove gallery panel ${index + 1}`}
+                          onClick={() =>
+                            setGalleryItems((items) =>
+                              items.filter((_, itemIndex) => itemIndex !== index)
+                            )
+                          }
+                          className="text-slate-400 hover:text-red-300"
+                        >
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </div>
+                      <label className="space-y-1.5">
+                        <span className="text-sm text-slate-300">Panel name</span>
+                        <input
+                          value={item.label}
+                          onChange={(change) =>
+                            setGalleryItems((items) =>
+                              items.map((current, itemIndex) =>
+                                itemIndex === index
+                                  ? { ...current, label: change.target.value }
+                                  : current
+                              )
+                            )
+                          }
+                          placeholder="Project showcase"
+                          className={fieldClass}
+                        />
+                      </label>
+                      <label className="space-y-1.5">
+                        <span className="text-sm text-slate-300">Image URL</span>
+                        <input
+                          value={item.image}
+                          onChange={(change) =>
+                            setGalleryItems((items) =>
+                              items.map((current, itemIndex) =>
+                                itemIndex === index
+                                  ? { ...current, image: change.target.value }
+                                  : current
+                              )
+                            )
+                          }
+                          placeholder="https://..."
+                          className={fieldClass}
+                        />
+                        <span className="flex items-center gap-2 text-xs text-slate-400">
+                          <Upload className="size-3.5 text-cyan-200" />
+                          Upload from your device
+                        </span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          disabled={uploadingIndex === index || pending}
+                          onChange={(change) => {
+                            const file = change.target.files?.[0]
+                            if (file) void uploadGalleryImage(index, file)
+                            change.target.value = ""
+                          }}
+                          className="block w-full cursor-pointer text-xs text-slate-400 file:mr-3 file:rounded-full file:border-0 file:bg-cyan-300 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-slate-950 hover:file:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-50"
+                        />
+                        {uploadingIndex === index ? (
+                          <span className="inline-flex items-center gap-1.5 text-xs text-cyan-200">
+                            <LoaderCircle className="size-3.5 animate-spin" />
+                            Uploading to GitHub...
+                          </span>
+                        ) : null}
+                      </label>
+                      <label className="space-y-1.5">
+                        <span className="text-sm text-slate-300">Click-through link (optional)</span>
+                        <input
+                          value={item.link ?? ""}
+                          onChange={(change) =>
+                            setGalleryItems((items) =>
+                              items.map((current, itemIndex) =>
+                                itemIndex === index
+                                  ? { ...current, link: change.target.value }
+                                  : current
+                              )
+                            )
+                          }
+                          placeholder="https://github.com/..."
+                          className={fieldClass}
+                        />
+                      </label>
+                      <label className="space-y-1.5">
+                        <span className="text-sm text-slate-300">Accessible alt text (optional)</span>
+                        <input
+                          value={item.alt ?? ""}
+                          onChange={(change) =>
+                            setGalleryItems((items) =>
+                              items.map((current, itemIndex) =>
+                                itemIndex === index
+                                  ? { ...current, alt: change.target.value }
+                                  : current
+                              )
+                            )
+                          }
+                          placeholder="Members presenting their project"
+                          className={fieldClass}
+                        />
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             <label className="space-y-1.5 sm:col-span-2">
               <span className="text-sm text-slate-300">
                 Resources URLs (one per line)
@@ -346,7 +540,7 @@ export function EventFormDialog({
             <Button
               type="submit"
               size="lg"
-              disabled={pending}
+              disabled={pending || uploadingIndex !== null}
               className="h-10 rounded-full bg-cyan-300 px-5 text-slate-900 hover:bg-cyan-200"
             >
               {pending ? "Saving..." : "Save event"}

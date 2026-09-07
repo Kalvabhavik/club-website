@@ -19,6 +19,13 @@ export type EventOrganizer = {
   github?: string
 }
 
+export type EventGalleryItem = {
+  image: string
+  label: string
+  link?: string
+  alt?: string
+}
+
 export type ClubEvent = {
   slug: string
   title: string
@@ -35,8 +42,8 @@ export type ClubEvent = {
   description: string
   tags: string[]
   organizers: EventOrganizer[]
-  /** Paths under /public, or remote URLs. Empty renders a gradient placeholder. */
-  gallery: string[]
+  /** Gallery panels with an image, visible name, and optional click-through link. */
+  gallery: EventGalleryItem[]
   resources: EventResource[]
   registrationStatus?: RegistrationStatus
   registerUrl?: string
