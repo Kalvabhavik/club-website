@@ -100,6 +100,16 @@ export const members: ClubMember[] = [
     image: "/members/JALADURGAM NEEHA CHAITRA.jpg"
   },
   {
+    username: "Adarsh Dudhera",
+    name: "Adarsh Dudhera",
+    role: "Member",
+    domains: ["Social Media team"],
+    bio: "Manages social updates and helps organise the club's events.",
+    year: "2025",
+    github: "Adarsh Dudhera",
+    image: "/members/Adarsh.jpg"
+  },
+  {
     username: "utkarsh-gupta",
     name: "Utkarsh Gupta",
     role: "Member",
@@ -230,6 +240,7 @@ export const members: ClubMember[] = [
     github: "darsh-chouhan",
     image: "/members/DARSH CHOUHAN.jpg"
   },
+
 ]
 
 export function getMemberStats(list: ClubMember[] = members) {
