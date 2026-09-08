@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowUpRight, CopyCheck, Sparkles, Users } from "lucide-react"
 
 import { NavigationMenuDemo } from "@/components/navigation"
+import MoltenMetal from "@/components/MoltenMetal"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -9,7 +10,7 @@ const socialLinks = [
   {
     name: "Instagram",
     description: "Photos, reels, event highlights, and quick updates.",
-    href: "https://instagram.com/your-club",
+    href: "https://www.instagram.com/",
     logo: "/social/instagram.svg",
     background: "#E4405F",
     accent: "from-fuchsia-500/25 via-pink-500/20 to-rose-500/20",
@@ -17,7 +18,7 @@ const socialLinks = [
   {
     name: "LinkedIn",
     description: "Alumni, partners, and professional opportunities.",
-    href: "https://linkedin.com/company/your-club",
+    href: "https://www.linkedin.com/",
     logo: "/social/linkedin.svg",
     background: "#0A66C2",
     accent: "from-sky-500/25 via-blue-500/20 to-indigo-500/20",
@@ -25,7 +26,7 @@ const socialLinks = [
   {
     name: "WhatsApp",
     description: "Community announcements and reminders.",
-    href: "https://chat.whatsapp.com/your-invite-link",
+    href: "https://wa.me/",
     logo: "/social/whatsapp.svg",
     background: "#25D366",
     accent: "from-emerald-400/25 via-teal-500/20 to-cyan-500/20",
@@ -33,7 +34,7 @@ const socialLinks = [
   {
     name: "Discord",
     description: "Discussions, collaborations, and voice chats.",
-    href: "https://discord.gg/your-server-invite",
+    href: "https://discord.com/",
     logo: "/social/discord.svg",
     background: "#5865F2",
     accent: "from-violet-500/25 via-purple-500/20 to-slate-700/20",
@@ -117,29 +118,48 @@ function SocialCard({
 
 export default function Page() {
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-linear-to-b from-slate-950 via-slate-900 to-cyan-950 text-white">
-      <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-cyan-400/25 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-emerald-400/15 blur-3xl" />
+    <div className="relative min-h-screen overflow-x-clip text-white">
+      <div className="pointer-events-none fixed inset-0 -z-10">
+        <MoltenMetal
+          color1="#1E88E5"
+          color2="#3bc7df"
+          color3="#FFFFFF"
+          speed={0.35}
+          scale={4}
+          detail={3}
+          glow={1.6}
+          coreSize={0.1}
+          swirl={1}
+          fold={-0.2}
+          blackPoint={0.05}
+          brightness={1.3}
+          colorMode="molten"
+          grain={true}
+          grainIntensity={0.05}
+          mouseInteraction={true}
+          mouseStrength={0.3}
+          opacity={1.0}
+        />
+      </div>
 
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
         <NavigationMenuDemo />
 
-        <section className=" rounded-[2.25rem] border border-white/12 bg-white/8 shadow-2xl shadow-slate-950/30 backdrop-blur-sm">
+        <section className="rounded-[2.25rem] border border-white/12 bg-white/8 shadow-2xl shadow-slate-950/30 backdrop-blur-sm">
           <div>
-            {/* <div className="relative p-8 sm:p-10 lg:p-14">
-              <p className="inline-flex w-max items-center gap-2 rounded-full border border-white/12 bg-white/8 px-4 py-1 text-xs font-semibold tracking-[0.18em] uppercase text-cyan-100">
+            <div className="relative p-8 sm:p-10 lg:p-14">
+              <p className="inline-flex w-max items-center gap-2 rounded-full border border-white/12 bg-white/8 px-4 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-100">
                 <Sparkles className="size-4" />
                 Stay Connected
               </p>
 
               <div className="mt-6 space-y-5">
                 <h1 className="max-w-2xl text-pretty text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-                  One place for every community link.
+                  Find your way into the community.
                 </h1>
                 <p className="max-w-xl text-base leading-7 text-slate-200 sm:text-lg">
-                  Keep your club&apos;s social presence aligned with the rest of the
-                  site. Share updates, route people to the right channel, and
-                  keep the page easy to maintain.
+                  Follow OS Code IIIT Dharwad for events, project collaborations,
+                  and the conversations happening between meetups.
                 </p>
               </div>
 
@@ -189,7 +209,7 @@ export default function Page() {
                   Start Contributing
                 </Link>
               </div>
-            </div> */}
+            </div>
 
             <div className="border-t border-white/10 bg-white/5 p-8 lg:border-t-0 lg:border-l lg:p-10">
               <div className="flex items-center gap-3 text-cyan-100">

@@ -3,9 +3,11 @@
 import * as React from "react"
 import Link from "next/link"
 import {
+  BookOpen,
   CircleAlertIcon,
   CircleCheckIcon,
   CircleDashedIcon,
+  Mail,
 } from "lucide-react"
 
 import {
@@ -92,7 +94,23 @@ export function NavigationMenuDemo() {
             <NavigationMenuItem>
               <NavigationMenuLink
                 className={navigationMenuTriggerStyle()}
-                render={<Link href="/contacts">Contact Us</Link>}
+                render={
+                  <Link href="/resources" className="inline-flex items-center gap-2">
+                    <BookOpen className="size-4" aria-hidden="true" />
+                    Resources
+                  </Link>
+                }
+              />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                render={
+                  <Link href="/contacts" className="inline-flex items-center gap-2">
+                    <Mail className="size-4" aria-hidden="true" />
+                    Contact Us
+                  </Link>
+                }
               />
             </NavigationMenuItem>
           </div>
