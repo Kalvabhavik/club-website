@@ -3,9 +3,6 @@ import { gsap } from 'gsap';
 
 import './AccordionGallery.css';
 
-/** @typedef {{ image: string, label: string, link?: string, alt?: string }} GalleryItem */
-
-/** @type {GalleryItem[]} */
 const DEFAULT_ITEMS = [
   { image: 'https://picsum.photos/id/1015/900/1200', label: 'Canyon', link: '#' },
   { image: 'https://picsum.photos/id/1018/900/1200', label: 'Ridgeline', link: '#' },
@@ -14,29 +11,6 @@ const DEFAULT_ITEMS = [
   { image: 'https://picsum.photos/id/1044/900/1200', label: 'Skyline', link: '#' }
 ];
 
-/** @typedef {object} AccordionGalleryProps
- * @property {GalleryItem[]} [items]
- * @property {number} [defaultIndex]
- * @property {string} [accentColor]
- * @property {string} [overlayColor]
- * @property {string} [textColor]
- * @property {number} [height]
- * @property {number} [gap]
- * @property {number} [radius]
- * @property {number} [expandRatio]
- * @property {'horizontal'|'vertical'} [orientation]
- * @property {number} [duration]
- * @property {string} [ease]
- * @property {number} [parallax]
- * @property {number} [tilt]
- * @property {number} [stagger]
- * @property {'hover'|'click'} [trigger]
- * @property {boolean} [showLabels]
- * @property {boolean} [grayscale]
- * @property {string} [className]
- */
-
-/** @param {AccordionGalleryProps} props */
 const AccordionGallery = ({
   items = DEFAULT_ITEMS,
   defaultIndex = 2,

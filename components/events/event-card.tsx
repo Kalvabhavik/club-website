@@ -24,7 +24,7 @@ export function EventCard({
   return (
     <article className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm transition-colors hover:border-cyan-300/40">
       <div className="relative aspect-16/9 w-full overflow-hidden">
-        <EventCover src={event.gallery[0]?.image} alt={event.title} seed={event.slug} />
+        <EventCover src={event.gallery[0]} alt={event.title} seed={event.slug} />
         <span className="absolute top-3 left-3 rounded-full border border-white/25 bg-slate-950/70 px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
           {event.category}
         </span>

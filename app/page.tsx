@@ -105,16 +105,16 @@ export default function Page() {
                 Contact us
               </p>
               <div className="flex flex-wrap gap-2">
-                <a href="https://www.instagram.com/oscode_iiitdwd?stkn=YWJodzhxYm94NGRw" target="_blank" rel="noreferrer" className="my-target inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-slate-200 transition-colors hover:border-pink-300/60 hover:text-white">
+                <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" className="my-target inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-slate-200 transition-colors hover:border-pink-300/60 hover:text-white">
                   <AtSign className="size-4" /> Instagram
                 </a>
-                <a href="https://www.linkedin.com/company/os-code-iiit-dwd/" target="_blank" rel="noreferrer" className="my-target inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-slate-200 transition-colors hover:border-sky-300/60 hover:text-white">
+                <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="my-target inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-slate-200 transition-colors hover:border-sky-300/60 hover:text-white">
                   <Users className="size-4" /> LinkedIn
                 </a>
                 <a href="https://wa.me/" target="_blank" rel="noreferrer" className="my-target inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-slate-200 transition-colors hover:border-emerald-300/60 hover:text-white">
                   <MessageCircle className="size-4" /> WhatsApp
                 </a>
-                <a href="https://discord.gg/2ucjFATtV" target="_blank" rel="noreferrer" className="my-target inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-slate-200 transition-colors hover:border-indigo-300/60 hover:text-white">
+                <a href="https://discord.com/" target="_blank" rel="noreferrer" className="my-target inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm text-slate-200 transition-colors hover:border-indigo-300/60 hover:text-white">
                   <ArrowUpRight className="size-4" /> Discord
                 </a>
               </div>

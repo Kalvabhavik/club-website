@@ -97,7 +97,6 @@ const TargetCursor = ({
     let resumeTimeout = null;
 
     const cleanupTarget = target => {
-      if (!target) return;
       if (currentLeaveHandler) {
         target.removeEventListener('mouseleave', currentLeaveHandler);
       }
@@ -165,7 +164,7 @@ const TargetCursor = ({
     tickerFnRef.current = tickerFn;
 
     const moveHandler = e => moveCursor(e.clientX, e.clientY);
-    window.addEventListener('pointermove', moveHandler, { passive: true });
+    window.addEventListener('mousemove', moveHandler);
 
     const scrollHandler = () => {
       if (!activeTarget || !cursorRef.current) return;
@@ -200,13 +199,20 @@ const TargetCursor = ({
     window.addEventListener('mouseup', mouseUpHandler);
 
     const enterHandler = e => {
-      const target = e.target instanceof Element
-        ? e.target.closest(targetSelector)
-        : null;
+      const directTarget = e.target;
+      const allTargets = [];
+      let current = directTarget;
+      while (current && current !== document.body) {
+        if (current.matches(targetSelector)) {
+          allTargets.push(current);
+        }
+        current = current.parentElement;
+      }
+      const target = allTargets[0] || null;
       if (!target || !cursorRef.current || !cornersRef.current) return;
       if (activeTarget === target) return;
       if (activeTarget) {
-        currentLeaveHandler?.();
+        cleanupTarget(activeTarget);
       }
       if (resumeTimeout) {
         clearTimeout(resumeTimeout);
@@ -342,7 +348,7 @@ const TargetCursor = ({
       target.addEventListener('mouseleave', leaveHandler);
     };
 
-    window.addEventListener('pointerover', enterHandler, { passive: true });
+    window.addEventListener('mouseover', enterHandler, { passive: true });
 
     const resizeHandler = () => {
       containingBlockRef.current = getContainingBlock(cursor);
@@ -354,8 +360,8 @@ const TargetCursor = ({
         gsap.ticker.remove(tickerFnRef.current);
       }
 
-      window.removeEventListener('pointermove', moveHandler);
-      window.removeEventListener('pointerover', enterHandler);
+      window.removeEventListener('mousemove', moveHandler);
+      window.removeEventListener('mouseover', enterHandler);
       window.removeEventListener('scroll', scrollHandler);
       window.removeEventListener('resize', resizeHandler);
       window.removeEventListener('mousedown', mouseDownHandler);

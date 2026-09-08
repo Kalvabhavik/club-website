@@ -78,7 +78,7 @@ export function UpcomingEvents({
           <div className="grid gap-0 overflow-hidden rounded-3xl border border-white/15 bg-white/5 backdrop-blur-sm md:grid-cols-2">
             <div className="relative min-h-56 md:min-h-full">
               <EventCover
-                src={featured.gallery[0]?.image}
+                src={featured.gallery[0]}
                 alt={featured.title}
                 seed={featured.slug}
               />

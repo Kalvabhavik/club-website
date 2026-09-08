@@ -12,6 +12,7 @@ import {
   Users,
 } from "lucide-react"
 import AccordionGallery from "@/components/AccordionGallery"
+import { EventCover } from "@/components/events/event-cover"
 import { EventFormDialog } from "@/components/events/event-form-dialog"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -117,8 +118,16 @@ export function EventDetail({
         ) : (
           <div>
             <AccordionGallery
-              items={event.gallery}
-              grayscale={false}
+            items={[
+              {image:'https://cdn.corenexis.com/f/A1ktjIg4zzt.jpg' ,label:"APP DEV" ,link:"#"},
+              {image:'https://cdn.corenexis.com/f/zeBnIlfxHmB.jpg' ,label:"APP DEV 2" ,link:"#"},
+              {image:'https://cdn.corenexis.com/f/zu1Sjo8EhQR.jpg' ,label:"APP DEV 3" ,link:"#"},
+              {image:'https://cdn.corenexis.com/f/uTONLbUpi4H.jpg' ,label:"APP DEV 4" ,link:"#"},
+
+              
+            
+            ]}
+            grayscale={false}
             />
           </div>
         )}

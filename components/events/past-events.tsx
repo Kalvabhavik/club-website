@@ -92,7 +92,7 @@ export function PastEvents({
           <div className="relative overflow-hidden rounded-3xl border border-white/15">
             <div className="absolute inset-0">
               <EventCover
-                src={featured.gallery[0]?.image}
+                src={featured.gallery[0]}
                 alt={featured.title}
                 seed={featured.slug}
               />
